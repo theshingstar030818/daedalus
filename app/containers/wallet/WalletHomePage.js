@@ -6,6 +6,7 @@ import WalletTransactionsList from '../../components/wallet/home/WalletTransacti
 import WalletTransactionsSearch from '../../components/wallet/home/WalletTransactionsSearch';
 import WalletNoTransactions from '../../components/wallet/home/WalletNoTransactions';
 import CachedRequest from '../../stores/lib/CachedRequest';
+import Wallet from '../../domain/Wallet';
 
 const messages = defineMessages({
   noTransactions: {
@@ -35,6 +36,9 @@ export default class WalletHomePage extends Component {
         hasAny: PropTypes.bool.isRequired,
         totalAvailable: PropTypes.number.isRequired,
       }),
+      wallets: PropTypes.shape({
+        active: PropTypes.instanceOf(Wallet),
+      }).isRequired,
     }).isRequired,
     actions: PropTypes.shape({
       filterTransactions: PropTypes.func.isRequired
@@ -68,6 +72,7 @@ export default class WalletHomePage extends Component {
     if (searchRequest.isExecuting || hasAny) {
       walletTransactions = (
         <WalletTransactionsList
+          activeWalletToken={this.props.stores.wallets.activeWalletToken}
           transactions={filtered}
           isLoadingTransactions={searchRequest.isExecuting}
           hasMoreToLoad={totalAvailable > searchLimit}

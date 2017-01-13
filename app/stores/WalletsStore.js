@@ -51,6 +51,12 @@ export default class WalletsStore extends Store {
     return null;
   }
 
+  // A unique token for each wallet switch (necessary for re-mounting parts of the DOM)
+  @computed get activeWalletToken() {
+    const id = this.active ? this.active.id : 'none';
+    return `${this.active.id}-${Date.now()}`;
+  }
+
   getWalletRoute(walletId: ?string, screen = 'home') {
     return `${this.BASE_ROUTE}/${walletId}/${screen}`;
   }

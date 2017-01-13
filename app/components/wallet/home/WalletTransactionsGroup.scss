@@ -1,0 +1,34 @@
+.list {
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.5);
+  background-blend-mode: lighten;
+  border: solid 1px #c6cdd6;
+  margin-bottom: 20px;
+  &:last-child {
+    margin: 0;
+  }
+}
+
+.transaction {
+  padding: 0 20px;
+  margin: 15px 0;
+}
+
+.group {
+  margin-top: 20px;
+  &:first-child {
+    margin-top: 0;
+  }
+  &:last-child {
+    margin-bottom: 20px;
+  }
+}
+
+.groupDate {
+  font-family: $font-regular;
+  font-size: 16px;
+  color: #5e6066;
+  opacity: 0.5;
+  margin-bottom: 10px;
+  margin-left: 20px;
+}

@@ -5,8 +5,9 @@ import { defineMessages, intlShape } from 'react-intl';
 import moment from 'moment';
 import classnames from 'classnames';
 import styles from './WalletTransactionsList.scss';
-import Transaction, { transactionShape } from '../../widgets/Transaction';
+import { transactionShape } from '../../widgets/Transaction';
 import LoadingSpinner from '../../widgets/LoadingSpinner';
+import WalletTransactionsGroup from './WalletTransactionsGroup';
 
 defineMessages({
 
@@ -18,6 +19,7 @@ const dateFormat = 'YYYY-MM-DD';
 export default class WalletTransactionsList extends Component {
 
   static propTypes = {
+    activeWalletToken: PropTypes.string.isRequired,
     transactions: MobxPropTypes.arrayOrObservableArrayOf(transactionShape).isRequired,
     isLoadingTransactions: PropTypes.bool.isRequired,
     hasMoreToLoad: PropTypes.bool.isRequired,
@@ -82,7 +84,7 @@ export default class WalletTransactionsList extends Component {
 
   render() {
     const { topShadow } = this.state;
-    const { transactions, isLoadingTransactions, hasMoreToLoad } = this.props;
+    const { activeWalletToken, transactions, isLoadingTransactions, hasMoreToLoad } = this.props;
     const transactionsGroups = this.groupTransactionsByDay(transactions);
 
     const loadingSpinner = isLoadingTransactions || hasMoreToLoad ? (
@@ -101,19 +103,11 @@ export default class WalletTransactionsList extends Component {
         ref={(div) => { this.list = div; }}
       >
         {transactionsGroups.map((group, groupIndex) => (
-          <div className={styles.group} key={groupIndex}>
-            <div className={styles.groupDate}>{group.date}</div>
-            <div className={styles.list}>
-              {group.transactions.map((transaction, transactionIndex) => (
-                <div className={styles.transaction} key={transactionIndex}>
-                  <Transaction
-                    data={transaction}
-                    isLastInList={transactionIndex === group.transactions.length - 1}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
+          <WalletTransactionsGroup
+            key={`${activeWalletToken}-${groupIndex}`}
+            transactions={group.transactions}
+            date={group.date}
+          />
         ))}
         {loadingSpinner}
       </div>
