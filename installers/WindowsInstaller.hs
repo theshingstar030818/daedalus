@@ -18,8 +18,8 @@ shortcutParameters = launcherArgs $ Launcher
   , walletPath = "%PROGRAMFILES%\\Daedalus\\Daedalus.exe"
   , installerPath = "%APPDATA%\\Daedalus\\Installer.exe"
   , runtimePath = "%APPDATA%\\Daedalus\\"
-  , reportServerUrl = "http://35.156.164.19:8080"
-  , systemStart = Nothing
+  , reportServerUrl = "http://35.157.192.243:8080"
+  , systemStart = Just 1489953182
   }
 
 daedalusShortcut :: [Attrib]
