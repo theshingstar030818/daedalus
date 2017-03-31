@@ -25,7 +25,6 @@ install:
   - ps: Start-FileDownload 'https://ci.appveyor.com/api/projects/jagajaga/cardano-sl/artifacts/CardanoSL.zip?branch=cardano-sl-0.3-qanet' -FileName CardanoSL.zip
   - 7z x CardanoSL.zip -y
   - cd ..\..\
-  - move node_modules\daedalus-client-api\log-config-prod.yaml installers\log-config-prod.yaml
   - move node_modules\daedalus-client-api\cardano-node.exe installers\
   - move node_modules\daedalus-client-api\cardano-launcher.exe installers\
   - del /f node_modules\daedalus-client-api\*.exe
