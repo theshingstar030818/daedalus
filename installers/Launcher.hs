@@ -33,7 +33,7 @@ launcherArgs launcher = unwords $
         "--db-path", quote (runtimePath launcher <> "DB-0.4"),
         "--wallet-db-path", quote (runtimePath launcher <> "Wallet-0.4"),
         "--peers-file", "ip-dht-mappings",
-        "--system-start", "1492428658",
+        "--system-start", "1494442772",
         "--wallet",
         "--explicit-initial"
         ]
