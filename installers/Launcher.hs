@@ -41,7 +41,7 @@ launcherArgs launcher = unwords $
         "--kademlia-peers-file", "ip-dht-mappings",
         "--kademlia-explicit-initial",
         "--update-server", "http://localhost:8080/",
-        "--system-start", "1499360281",
+        "--system-start", "1499802478",
         "--wallet",
         "--update-with-package",
         "--tlscert", quote (runtimePath launcher <> tlsPath <> "server" <> (pathSeparator : "server.crt")),
