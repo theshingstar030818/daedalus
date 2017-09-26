@@ -8,6 +8,7 @@ const webpack = require('webpack');
 
 const TARGET_API = process.env.API || 'ada';
 let API_TO_LOAD = null;
+
 if (TARGET_API === 'ada') {
   API_TO_LOAD = path.resolve('./app/api/ada/index.js');
 }
@@ -15,7 +16,7 @@ if (TARGET_API === 'etc') {
   API_TO_LOAD = path.resolve('./app/api/etc/index.js');
 }
 
-module.exports = validate({
+const baseConfig = validate({
   cache: true,
   module: {
     loaders: [{
@@ -33,15 +34,15 @@ module.exports = validate({
       test: /\.md$/,
       loader: 'html!markdown?gfm=false',
     },
-    {
-      test: /\.(?:png|jpg|svg|otf|ttf)$/,
-      loader: 'url-loader',
-      exclude: /\.inline\.svg$/,
-    },
-    {
-      test: /\.inline\.svg$/,
-      loader: 'raw-loader',
-    }]
+      {
+        test: /\.(?:png|jpg|svg|otf|ttf)$/,
+        loader: 'url-loader',
+        exclude: /\.inline\.svg$/,
+      },
+      {
+        test: /\.inline\.svg$/,
+        loader: 'raw-loader',
+      }]
   },
 
   output: {
@@ -65,7 +66,6 @@ module.exports = validate({
       'process.env.MOBX_DEV_TOOLS': process.env.MOBX_DEV_TOOLS || 0,
       'process.env.DAEDALUS_VERSION': JSON.stringify(process.env.DAEDALUS_VERSION || 'dev')
     }),
-    TARGET_API !== 'mock' && new webpack.NormalModuleReplacementPlugin(/api\/mock\/index\.js/, API_TO_LOAD),
   ],
 
   externals: [
@@ -74,3 +74,9 @@ module.exports = validate({
   ],
 
 });
+
+if (TARGET_API !== 'mock') {
+  baseConfig.plugins.push(new webpack.NormalModuleReplacementPlugin(/api\/mock\/index\.js/, API_TO_LOAD));
+}
+
+module.exports = baseConfig;
