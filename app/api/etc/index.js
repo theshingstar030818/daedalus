@@ -5,6 +5,7 @@ import { GenericApiError } from '../errors';
 import type { GetSyncProgressResponse } from '../index';
 import type { GetEtcSyncProgressResponse } from './getEtcSyncProgress';
 
+export const ETC_API_HOST = "ec2-52-30-28-57.eu-west-1.compute.amazonaws.com";
 export const ETC_API_PORT = 8546;
 
 export default class EtcApi {
