@@ -17,6 +17,19 @@ export default class SidebarLayout extends Component {
     contentDialog?: ?Element<any>,
   };
 
+  webview = null;
+
+  componentDidMount() {
+    setTimeout(() => {
+      if (this.webview !== null) {
+        this.webview.addEventListener('ipc-message', (event) => {
+          console.log(event.channel);
+        });
+        this.webview.send('ping');
+      }
+    }, 1000);
+  }
+
   render() {
     const { children, sidebar, topbar, notification, contentDialog } = this.props;
     return (
@@ -31,6 +44,12 @@ export default class SidebarLayout extends Component {
           {notification}
           <div className={styles.contentWrapper}>
             <div className={styles.content}>
+              <webview
+                ref={(element) => this.webview = element}
+                src="/Users/dominik/Downloads/test/index.html"
+                className={styles.webview}
+                preload="/Users/dominik/work/clients/input-output/daedalus/daedalus/app/preload.js"
+              />
               {children}
             </div>
             {contentDialog}
