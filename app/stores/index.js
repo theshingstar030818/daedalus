@@ -8,6 +8,7 @@ import WindowStore from './WindowStore';
 import UiDialogsStore from './UiDialogsStore';
 import UiNotificationsStore from './UiNotificationsStore';
 import NetworkStatusStore from './NetworkStatusStore';
+import PluginsStore from './PluginsStore';
 import setupAdaStores from './ada/index';
 import setupEtcStores from './etc/index';
 import type { AdaStoresMap } from './ada/index';
@@ -23,6 +24,7 @@ export const storeClasses = {
   uiDialogs: UiDialogsStore,
   uiNotifications: UiNotificationsStore,
   networkStatus: NetworkStatusStore,
+  plugins: PluginsStore,
 };
 
 export type StoresMap = {
@@ -35,6 +37,7 @@ export type StoresMap = {
   uiDialogs: UiDialogsStore,
   uiNotifications: UiNotificationsStore,
   networkStatus: NetworkStatusStore,
+  plugins: PluginsStore,
   ada: AdaStoresMap,
   etc: EtcStoresMap,
 };
@@ -50,6 +53,7 @@ const stores = observable({
   uiDialogs: null,
   uiNotifications: null,
   networkStatus: null,
+  plugins: null,
   ada: null,
   etc: null,
 });

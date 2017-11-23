@@ -4,6 +4,7 @@ import { observer, inject } from 'mobx-react';
 import Sidebar from '../components/sidebar/Sidebar';
 import TopBarContainer from './TopBarContainer';
 import SidebarLayout from '../components/layout/SidebarLayout';
+import PluginRenderer from '../components/layout/PluginRenderer';
 import StatusMessagesNotification from '../components/notifications/StatusMessagesNotification';
 import NodeUpdatePage from './notifications/NodeUpdatePage';
 import WalletAddPage from './wallet/WalletAddPage';
@@ -64,12 +65,15 @@ export default class MainLayout extends Component<Props> {
       ) : null
     );
 
+    console.log(stores);
+
     return (
       <SidebarLayout
         sidebar={sidebarComponent}
         topbar={<TopBarContainer />}
         notification={addStatusMessagesNotification || addNodeUpdateNotification}
         contentDialog={<WalletAddPage />}
+        pluginRenderer={<PluginRenderer plugins={stores.plugins} />}
       >
         {this.props.children}
       </SidebarLayout>

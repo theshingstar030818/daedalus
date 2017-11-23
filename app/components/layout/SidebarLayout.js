@@ -8,6 +8,7 @@ type Props = {
   children: any | Node,
   sidebar: Node,
   topbar: Node,
+  pluginRenderer: Node,
   notification?: ?Node,
   contentDialog?: ?Node,
 };
@@ -20,7 +21,8 @@ export default class SidebarLayout extends Component<Props> {
   };
 
   render() {
-    const { children, sidebar, topbar, notification, contentDialog } = this.props;
+    const { children, sidebar, topbar, notification, contentDialog,
+      pluginRenderer } = this.props;
     return (
       <div className={styles.component}>
         <div className={styles.sidebar}>
@@ -34,6 +36,7 @@ export default class SidebarLayout extends Component<Props> {
           <div className={styles.contentWrapper}>
             <div className={styles.content}>
               {children}
+              {pluginRenderer}
             </div>
             {contentDialog}
           </div>
