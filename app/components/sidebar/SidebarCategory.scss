@@ -9,6 +9,9 @@
   display: flex;
   height: $sidebar-button-height;
   width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
 
   &:hover {
     background-color: var(--theme-sidebar-category-background-color-hover);
@@ -25,8 +28,7 @@
 }
 
 .icon {
-  flex-shrink: 0;
-  margin: 0 30px;
+  margin: 30px;
   & > svg {
     width: 24px;
     height: 24px;
@@ -40,6 +42,18 @@
     }
   }
 }
+
+.isPlugin {
+  .icon {
+    flex: 1;
+    background: {
+      size: contain;
+      repeat: no-repeat;
+      position: auto;
+    }
+  } 
+}
+
 
 .label {
   font-family: var(--font-regular);

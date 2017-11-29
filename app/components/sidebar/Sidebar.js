@@ -24,6 +24,9 @@ type Props = {
     route: string,
     icon: string,
   }>,
+  plugins: Array<{
+    name: string,
+  }>,
   activeSidebarCategory: string,
   onCategoryClicked: Function,
   isShowingSubMenus: boolean,
@@ -37,10 +40,16 @@ export default class Sidebar extends Component<Props> {
     isShowingSubMenus: false,
   };
 
+  onCategoryClicked(category: string, isPlugin?: boolean = false) {
+    const { onCategoryClicked } = this.props;
+
+    onCategoryClicked({ category, isPlugin });
+  }
+
   render() {
     const {
-      menus, categories, activeSidebarCategory,
-      isShowingSubMenus, onCategoryClicked,
+      menus, categories, plugins, activeSidebarCategory,
+      isShowingSubMenus,
       openDialogAction,
     } = this.props;
     let subMenu = null;
@@ -76,7 +85,19 @@ export default class Sidebar extends Component<Props> {
                 className={categoryClassName}
                 icon={category.icon}
                 active={activeSidebarCategory === category.route}
-                onClick={() => onCategoryClicked(category.route)}
+                onClick={() => this.onCategoryClicked(category.route)}
+              />
+            );
+          })}
+          {plugins.map((plugin, index) => {
+            const route = `plugins/${plugin.id}`;
+            return (
+              <SidebarCategory
+                key={index}
+                icon={plugin.icon}
+                active={activeSidebarCategory === route}
+                onClick={() => this.onCategoryClicked(route)}
+                isPlugin
               />
             );
           })}

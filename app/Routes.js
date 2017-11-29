@@ -16,6 +16,7 @@ import TermsOfUseSettingsPage from './containers/settings/categories/TermsOfUseS
 import TermsOfUsePage from './containers/profile/TermsOfUsePage';
 import SendLogsChoicePage from './containers/profile/SendLogsChoicePage';
 import DisplaySettingsPage from './containers/settings/categories/DisplaySettingsPage';
+import Plugins from './containers/plugins/Plugins';
 
 // Dynamic container loading - resolver loads file relative to '/app/' directory
 const LoadingPage = resolver('containers/LoadingPage');
@@ -49,5 +50,7 @@ export const Routes = (
       <Route path="support" component={SupportSettingsPage} />
       <Route path="display" component={DisplaySettingsPage} />
     </Route>
+    {/* Plugins Dummy Route */}
+    <Route path={ROUTES.PLUGINS} component={Plugins} />
   </div>
 );

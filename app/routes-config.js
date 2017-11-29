@@ -25,4 +25,5 @@ export const ROUTES = {
     SUPPORT: '/settings/support',
     DISPLAY: '/settings/display',
   },
+  PLUGINS: '/plugins/:id',
 };

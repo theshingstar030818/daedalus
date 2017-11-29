@@ -9,21 +9,32 @@ type Props = {
   icon: string,
   active: boolean,
   onClick: Function,
-  className: string,
+  className?: string,
+  isPlugin?: boolean,
 };
 
 @observer
 export default class SidebarCategory extends Component<Props> {
   render() {
-    const { icon, active, onClick, className } = this.props;
+    const { icon, active, onClick, className, isPlugin } = this.props;
+
     const componentStyles = classNames([
       styles.component,
       active ? styles.active : null,
-      className
+      className,
+      isPlugin ? styles.isPlugin : null,
     ]);
+
     return (
       <button className={componentStyles} onClick={onClick}>
-        <SvgInline svg={icon} className={styles.icon} />
+        {!isPlugin ? (
+          <SvgInline svg={icon} className={styles.icon} />
+        ) : (
+          <span
+            style={{ backgroundImage: `url('${icon}')` }}
+            className={styles.icon}
+          />
+        )}
       </button>
     );
   }

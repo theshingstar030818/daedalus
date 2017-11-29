@@ -43,12 +43,18 @@ export default class MainLayout extends Component<Props> {
         menus={sidebarMenus}
         isShowingSubMenus={sidebar.isShowingSubMenus}
         categories={sidebar.CATEGORIES}
+        plugins={stores.plugins.all}
         activeSidebarCategory={sidebar.activeSidebarCategory}
-        onCategoryClicked={category => {
-          actions.sidebar.activateSidebarCategory.trigger({ category });
-        }}
+        onCategoryClicked={actions.sidebar.activateSidebarCategory.trigger}
         isSynced
         openDialogAction={actions.dialogs.open.trigger}
+      />
+    );
+
+    const pluginRendererComponent = (
+      <PluginRenderer
+        plugins={stores.plugins.all}
+        activeId={stores.plugins.activePluginId}
       />
     );
 
@@ -65,15 +71,13 @@ export default class MainLayout extends Component<Props> {
       ) : null
     );
 
-    console.log(stores);
-
     return (
       <SidebarLayout
         sidebar={sidebarComponent}
         topbar={<TopBarContainer />}
         notification={addStatusMessagesNotification || addNodeUpdateNotification}
         contentDialog={<WalletAddPage />}
-        pluginRenderer={<PluginRenderer plugins={stores.plugins} />}
+        pluginRenderer={pluginRendererComponent}
       >
         {this.props.children}
       </SidebarLayout>
