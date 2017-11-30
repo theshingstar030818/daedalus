@@ -3,6 +3,8 @@ import path from 'path';
 import { computed } from 'mobx';
 import RouteParser from 'route-parser';
 
+import fs from 'fs';
+
 import Store from './lib/Store';
 import { ROUTES } from '../routes-config';
 
@@ -14,10 +16,13 @@ TODO:
   - [ ] parse config file
 */
 
+const rootPath = path.join(app.getPath('userData'), 'Plugins');
+
 export default class PluginsStore extends Store {
   testPlugins = [
     'test1',
     'test2',
+    'test3',
   ];
 
   @computed get activePluginId() {
@@ -29,28 +34,38 @@ export default class PluginsStore extends Store {
   }
 
   @computed get all(): Array<any> {
+    // TODO: all of this should be done by a plugin API
     return this.testPlugins.map((p) => {
-      const pluginPath = this._buildPluginPath(p);
-      return {
-        name: p,
-        id: `plugin-${p}`,
-        path: pluginPath,
-        main: path.join(pluginPath, 'index.html'),
-        icon: path.join(pluginPath, 'icon.svg'),
-      };
-    });
+      const plugin = this._loadManifest(p);
+
+      if (plugin) return plugin;
+
+      return null;
+    }).filter(p => p !== null);
   }
 
-  // @computed get active() {
-  //   return this.get(this.activePluginId);
-  // }
-
-  // get(id) {
-  //   return this.all.find(p => p.id === id);
-  // }
-
   // Helpers
-  _buildPluginPath(plugin): string {
-    return path.join(app.getPath('userData'), 'Plugins', plugin);
+  _buildPluginPath(id): string {
+    return path.join(rootPath, id);
+  }
+
+  _loadManifest(id) {
+    // TODO: all of this should be done by a plugin API
+    try {
+      const pluginPath = this._buildPluginPath(id);
+      const rawFileContent = fs.readFileSync(path.join(pluginPath, 'manifest.json'));
+      const config = JSON.parse(rawFileContent);
+
+      // TODO: add manifest validation
+      return Object.assign(config, {
+        path: pluginPath,
+        main: path.join(pluginPath, config.main),
+        icon: path.join(pluginPath, 'icon.svg'),
+      });
+    } catch (err) {
+      console.error('PluginStore::loadManifest failed for ', id, err);
+    }
+
+    return false;
   }
 }
