@@ -54,11 +54,11 @@ launcherArgs Launcher{..} = unwords $
               ]
       configurationArgs | os == "mingw32" =
                           [ "--configuration-file", quote "%DAEDALUS_DIR%\\configuration.yaml"
-                          , "--configuration-key",  quote "dev"
+                          , "--configuration-key",  quote "devnet"
                           ]
                         | otherwise =
                           [ "--configuration-file", quote "./configuration.yaml"
-                          , "--configuration-key",  quote "dev"
+                          , "--configuration-key",  quote "devnet"
                          ]
       nodeDbPath = runtimePath <> "DB-" <> version
       nodeArgs = [
