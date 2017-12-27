@@ -59,8 +59,8 @@ daedalus_version="$1"; arg2nz "daedalus version" $1; shift
 cardano_branch="$(printf '%s' "$1" | tr '/' '-')"; arg2nz "Cardano SL branch to build Daedalus with" $1; shift
 
 case "$(uname -s)" in
-        Darwin ) os=osx;   key=macos-3.p12;;
-        Linux )  os=linux; key=linux.p12;;
+        Darwin ) OS_NAME=darwin; os=osx;   key=macos-3.p12;;
+        Linux )  OS_NAME=linux;  os=linux; key=linux.p12;;
         * )     usage "Unsupported OS: $(uname -s)";;
 esac
 
@@ -97,7 +97,7 @@ export PATH=$HOME/.local/bin:$PATH
 export DAEDALUS_VERSION=${daedalus_version}.${build_id}
 if [ -n "${NIX_SSL_CERT_FILE-}" ]; then export SSL_CERT_FILE=$NIX_SSL_CERT_FILE; fi
 
-CARDANO_BUILD_UID="${TRAVIS_OS_NAME}-${cardano_branch//\//-}"
+CARDANO_BUILD_UID="${OS_NAME}-${cardano_branch//\//-}"
 ARTIFACT_BUCKET=ci-output-sink        # ex- cardano-sl-travis
 CARDANO_ARTIFACT=cardano-binaries     # ex- daedalus-bridge
 CARDANO_ARTIFACT_FULL_NAME=${CARDANO_ARTIFACT}-${CARDANO_BUILD_UID}
