@@ -95,7 +95,7 @@ makeScriptsDir cfg = do
         else
           copyFile "data/scripts-mantis/postinstall" (encodeString $ tempdir </> "postinstall")
       liftIO $ run "ls" [ "-ltrh", T.pack $ encodeString tempdir ]
-      pure "data/scripts-mantis"
+      pure $ T.pack $ encodeString tempdir
 
 makeInstaller :: InstallerConfig -> IO ()
 makeInstaller cfg = do
